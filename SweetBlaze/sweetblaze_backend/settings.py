@@ -25,7 +25,42 @@ SECRET_KEY = 'django-insecure-=!l*9^kzz$jzso2!t8!!*20*zn10cg1-lo8a^wqg=)e1qh)5ir
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# CORS settings
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8100",  # Ionic dev server
+    "http://localhost:5173",  # Vite default
+    "http://127.0.0.1:8100",
+    "http://127.0.0.1:5173",
+    "http://localhost:8000",  # API REST
+    "http://127.0.0.1:8000",
+    "http://localhost:8001",  # WebSocket
+    "http://127.0.0.1:8001",
+]
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
+
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -40,11 +75,13 @@ INSTALLED_APPS = [
 
     'rest_framework',       
     'channels',             
-    'notifications',        
+    'notifications',     
+    'corsheaders',   
 
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # debe ir primero
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -129,12 +166,39 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # WebSocket config
 ASGI_APPLICATION = 'sweetblaze_backend.asgi.application'
 
+# Channel layer configuration
 CHANNEL_LAYERS = {
     "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer"
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+        "CONFIG": {
+            "capacity": 1000,  # Número máximo de mensajes en memoria
+        },
     }
+}
+
+# Logging configuration para ver mensajes de WebSocket
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'notifications': {  # Este es el logger que usamos en views.py
+            'handlers': ['console'],
+            'level': 'INFO',
+        },
+        'channels': {  # Logger para Django Channels
+            'handlers': ['console'],
+            'level': 'INFO',
+        },
+    },
 }
 
 # Media files (uploads)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+
