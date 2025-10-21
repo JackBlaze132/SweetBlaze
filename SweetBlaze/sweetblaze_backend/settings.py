@@ -27,14 +27,10 @@ DEBUG = True
 
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8100",  # Ionic dev server
-    "http://localhost:5173",  # Vite default
-    "http://127.0.0.1:8100",
+    "http://localhost:5173",  # Vite dev server
     "http://127.0.0.1:5173",
-    "http://localhost:8000",  # API REST
+    "http://localhost:8000",  # API REST + WebSocket
     "http://127.0.0.1:8000",
-    "http://localhost:8001",  # WebSocket
-    "http://127.0.0.1:8001",
 ]
 
 CORS_ALLOW_CREDENTIALS = True

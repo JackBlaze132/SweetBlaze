@@ -1,0 +1,16 @@
+django>=5.2.0
+djangorestframework>=3.14.0
+channels>=4.0.0
+daphne>=4.0.0
+django-cors-headers>=4.3.0
+Pillow>=10.0.0  # Para manejo de imágenes
+python-multipart>=0.0.6  # Para manejo de form-data
+cryptography>=46.0.0
+cffi>=2.0.0
+attrs>=25.4.0
+#autobahn>=25.10.1
+Twisted>=25.5.0
+service_identity>=24.1.0  # Para Twisted SSL/TLS
+pyOpenSSL>=24.1.0  # Para soporte SSL
+asgiref>=3.7.2
+channels_redis>=4.2.0  # Opcional: si quieres usar Redis como backend para channels

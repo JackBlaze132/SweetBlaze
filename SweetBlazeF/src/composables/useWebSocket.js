@@ -3,8 +3,8 @@ import { ref } from 'vue'
 export function useWebSocket() {
   const notifications = ref([])
 
-  // WebSocket en puerto 8001 (Daphne)
-  const socket = new WebSocket('ws://localhost:8001/ws/notifications/')
+  // WebSocket en puerto 8000 (Daphne ASGI)
+  const socket = new WebSocket('ws://localhost:8000/ws/notifications/')
 
   socket.onopen = () => {
     console.log('✅ WebSocket conectado')
